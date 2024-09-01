@@ -40,7 +40,8 @@ export default function Home() {
       if (!response.ok) throw new Error("Word not found");
 
       const data: WordData[] = await response.json();
-      console.log(data);
+      setError(null);
+
       setFetchedWordData({
         word: data[0].word,
         phonetics: data[0].phonetics,
@@ -60,12 +61,17 @@ export default function Home() {
     }
   };
 
+  const playAudio = (url: string) => {
+    const audio = new Audio(url);
+    audio.play();
+  };
+
   return (
-    <div className="flex  flex-col justify-center items-center pt-10 ">
-      <div className="relative flex items-center  justify-end">
+    <div className="flex   flex-col justify-center items-center pt-10 pb-6 px-4   ">
+      <div className="relative flex items-center  justify-center w-full">
         <input
           type="text"
-          className="border-2 px-8 py-2"
+          className="border-2  px-8 py-4 bg-gray-100 rounded-2xl w-11/12"
           value={word}
           onChange={(e) => setWord((e.target as HTMLInputElement).value)}
           placeholder="search a word"
@@ -73,35 +79,61 @@ export default function Home() {
 
         <img
           src="/searchIcon.svg"
-          className="absolute mr-3"
+          className="absolute right-4 mr-6"
           onClick={() => fetchDefinition()}
         />
       </div>
 
       {error && <p className="text-red-500 mt-3">{error}</p>}
 
-      <h1>{fetchedWordData?.word}</h1>
+      <div className="ml-4">
+        <div>
+          <div className="flex justify-between items-center pt-10">
+            <div className=" flex flex-col gap-y-2">
+              <h1>{fetchedWordData?.word}</h1>
 
-      <div>
-        {fetchedWordData?.phonetics.map((phonetic, index) => (
-          <div key={index}>
-            <h3>{phonetic.text}</h3>
+              {fetchedWordData &&
+                fetchedWordData.phonetics &&
+                fetchedWordData?.phonetics.length > 0 && (
+                  <h3 className="text-sky-600">
+                    {fetchedWordData.phonetics[0].text}
+                  </h3>
+                )}
+            </div>
+
+            {fetchedWordData && fetchedWordData.phonetics.length > 0 && (
+              <button
+                onClick={() => playAudio(fetchedWordData.phonetics[0].audio!)}
+                className="w-14 mr-6"
+              >
+                <img src="/icon-play.svg" alt="Play audio" />
+              </button>
+            )}
           </div>
-        ))}
+        </div>
 
         {fetchedWordData?.meanings.map((meaning, index) => (
           <div key={index}>
-            <h2>{meaning.partOfSpeech}</h2>
+            <div className="flex items-center">
+              <h2 className="mr-4 py-4">{meaning.partOfSpeech}</h2>
+              <div className=" flex-grow border-t border-gray-300 mr-4"></div>
+            </div>
 
-            <h3>Meaning</h3>
-            <ul>
-              {meaning.definitions.map((def, index) => (
-                <li key={index}>
-                  {def.definition}
-                  {def.example && <p>{def.example}</p>}
-                </li>
-              ))}
-            </ul>
+            <div className="flex flex-col items-start">
+              <h3 className="pb-4">Meaning</h3>
+              <ul className="list-disc marker:text-sky-600 ml-4 pb-4">
+                {meaning.definitions.map((def, index) => (
+                  <li key={index} className="pb-4">
+                    {def.definition}
+                    {def.example && (
+                      <p className="text-customGray pt-2 pb-2">
+                        "{def.example}"
+                      </p>
+                    )}
+                  </li>
+                ))}
+              </ul>{" "}
+            </div>
             {meaning.definitions[0].synonyms && (
               <div>
                 <span>Synonyms</span>
@@ -111,12 +143,16 @@ export default function Home() {
           </div>
         ))}
 
+        <div className=" border-t border-gray-300 mt-2"></div>
+
         {fetchedWordData?.sourceUrls && (
           <div className="flex flex-col mt-4">
-            <label className="font-semibold">Source: </label>
+            <label className="font-semibold text-gray-500  underline underline-offset-4 decoration-gray-300 ">
+              Source:{" "}
+            </label>
             <a
               href={fetchedWordData.sourceUrls[0]}
-              className="text-blue-600 underline"
+              className="text-blacl underline underline-offset-2 decoration-black pt-2"
             >
               {fetchedWordData.sourceUrls[0]}
             </a>
