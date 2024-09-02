@@ -68,8 +68,8 @@ export default function Home() {
   };
 
   return (
-    <div className="flex   flex-col justify-center items-center  pt-10 pb-6 px-4   ">
-      <div className="relative flex items-center  justify-center w-full">
+    <div className="flex flex-col justify-center items-center pt-10 pb-6 px-4  ">
+      <div className="relative flex items-center  justify-center w-full  lg:max-w-2xl  ">
         <input
           type="text"
           className="border-2  px-8 py-4 bg-gray-100 dark:bg-gray-900 dark:text-white  rounded-2xl w-11/12"
@@ -77,19 +77,21 @@ export default function Home() {
           onChange={(e) => setWord((e.target as HTMLInputElement).value)}
           placeholder="search a word"
           onKeyDown={(e) => {
-            fetchDefinition();
+            if (e.key === "Enter") {
+              fetchDefinition();
+            }
           }}
         ></input>
 
         <img
           src="/searchIcon.svg"
-          className="absolute right-4 mr-6"
+          className="absolute right-4 mr-6 sm:mr-8 md:mr-12 lg:mr-10"
           onClick={() => fetchDefinition()}
         />
       </div>
 
       {error && (
-        <div className="flex flex-col  justify-center items-center gap-y-8">
+        <div className="flex flex-col  justify-center items-center gap-y-8 lg:max-w-2xl">
           <img src="/sad.png" className="pt-10" />
           <h3 className="text-white">{error}</h3>
           <p className="  px-4 text-gray-500">
@@ -100,11 +102,13 @@ export default function Home() {
         </div>
       )}
 
-      <div className="ml-4">
+      <div className="ml-4 lg:max-w-xl">
         <div>
           <div className="flex justify-between items-center pt-10">
             <div className=" flex flex-col gap-y-2">
-              <h1>{fetchedWordData?.word}</h1>
+              <h1 className=" text-3xl md:text-5xl font-bold">
+                {fetchedWordData?.word}
+              </h1>
 
               {fetchedWordData &&
                 fetchedWordData.phonetics &&
@@ -126,12 +130,14 @@ export default function Home() {
         {fetchedWordData?.meanings.map((meaning, index) => (
           <div key={index}>
             <div className="flex items-center">
-              <h2 className="mr-4 py-4">{meaning.partOfSpeech}</h2>
+              <h2 className="mr-4 py-4 text-xl font-bold">
+                {meaning.partOfSpeech}
+              </h2>
               <div className=" flex-grow border-t border-gray-300 mr-4"></div>
             </div>
 
             <div className="flex flex-col items-start">
-              <h3 className="pb-4">Meaning</h3>
+              <h3 className="pb-4 text-gray-400">Meaning</h3>
               <ul className="list-disc marker:text-sky-600 ml-4 pb-4">
                 {meaning.definitions.map((def, index) => (
                   <li key={index} className="pb-4">
@@ -146,9 +152,13 @@ export default function Home() {
               </ul>{" "}
             </div>
             {meaning.definitions[0].synonyms && (
-              <div>
-                <span>Synonyms</span>
-                <span>{meaning.definitions[0].synonyms.join(",")}</span>
+              <div className="flex gap-x-3">
+                <span className="text-gray-400 pr-2">Synonyms :</span>
+                <div className="flex gap-x-1 text-purple-500 font-bold">
+                  {meaning.definitions[0].synonyms.map((synonym, index) => (
+                    <span>{synonym},</span>
+                  ))}
+                </div>
               </div>
             )}
           </div>
@@ -157,13 +167,13 @@ export default function Home() {
         <div className=" border-t border-gray-300 mt-2"></div>
 
         {fetchedWordData?.sourceUrls && (
-          <div className="flex flex-col mt-4">
+          <div className="flex flex-col sm:flex sm:flex-row sm:items-center sm:gap-x-4 md:flex md:flex-row md:items-center md:gap-x-4 mt-4 sm:pt-2 md:pt-2">
             <label className="font-semibold text-gray-500  underline underline-offset-4 decoration-gray-300 ">
               Source:{" "}
             </label>
             <a
               href={fetchedWordData.sourceUrls[0]}
-              className="text-blacl underline underline-offset-2 decoration-black pt-2"
+              className="text-blacl underline underline-offset-2 decoration-black pt-2 sm:pt-0 md:pt-0"
             >
               {fetchedWordData.sourceUrls[0]}
             </a>

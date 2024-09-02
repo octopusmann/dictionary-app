@@ -25,7 +25,7 @@ export function ThemeToggle() {
   });
 
   return (
-    <div className=" flex  justify-between pt-8">
+    <div className=" flex   justify-between  lg:justify-around xl:px-44 pt-8 ">
       <img src="/logo.svg" className="pl-8" />
       <div className="flex items-center gap-x-4">
         <Switch
