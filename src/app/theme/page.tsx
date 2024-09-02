@@ -1,6 +1,7 @@
 "use client";
 import Switch from "react-switch";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 export function ThemeToggle() {
   const [currentTheme, setCurrenTheme] = useState(false);
 
@@ -22,11 +23,17 @@ export function ThemeToggle() {
       setCurrenTheme(true);
       document.documentElement.classList.add("dark");
     }
-  });
+  }, []);
 
   return (
     <div className=" flex   justify-between  lg:justify-around xl:px-44 pt-8 ">
-      <img src="/logo.svg" className="pl-8" />
+      <Image
+        src="/logo.svg"
+        alt="logo"
+        width={62}
+        height={10}
+        className="pl-8"
+      />
       <div className="flex items-center gap-x-4">
         <Switch
           checked={currentTheme}
@@ -35,7 +42,13 @@ export function ThemeToggle() {
           uncheckedIcon={false}
           checkedIcon={false}
         />
-        <img src="/icon-moon.svg" className="pr-8" />
+        <Image
+          src="/icon-moon.svg"
+          alt="moon-icon"
+          width={54}
+          height={10}
+          className="pr-8"
+        />
       </div>
     </div>
   );

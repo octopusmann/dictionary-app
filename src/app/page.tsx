@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Image from "next/image";
 
 interface Phonetic {
   text: string;
@@ -83,8 +84,11 @@ export default function Home() {
           }}
         ></input>
 
-        <img
+        <Image
+          alt="searchIcon"
           src="/searchIcon.svg"
+          width={15.55}
+          height={15.55}
           className="absolute right-4 mr-6 sm:mr-8 md:mr-12 lg:mr-10"
           onClick={() => fetchDefinition()}
         />
@@ -92,7 +96,13 @@ export default function Home() {
 
       {error && (
         <div className="flex flex-col  justify-center items-center gap-y-8 lg:max-w-2xl">
-          <img src="/sad.png" className="pt-10" />
+          <Image
+            alt="sad-Icon"
+            width={64}
+            height={64}
+            src="/sad.png"
+            className="pt-10"
+          />
           <h3 className="text-white">{error}</h3>
           <p className="  px-4 text-gray-500">
             Sorry pal, we couldn't find definitions for the word you were
@@ -121,7 +131,12 @@ export default function Home() {
 
             {fetchedWordData && fetchedWordData.phonetics.length > 0 && (
               <button className="w-14 mr-6">
-                <img src="/icon-play.svg" alt="Play audio" />
+                <Image
+                  src="/icon-play.svg"
+                  width={75}
+                  height={75}
+                  alt="Play audio"
+                />
               </button>
             )}
           </div>
