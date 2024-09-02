@@ -37,7 +37,7 @@ export default function Home() {
         `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
       );
 
-      if (!response.ok) throw new Error("Word not found");
+      if (!response.ok) throw new Error("No Definitions Found");
 
       const data: WordData[] = await response.json();
       setError(null);
@@ -58,6 +58,7 @@ export default function Home() {
       });
     } catch (error) {
       if (error instanceof Error) setError(error.message);
+      setFetchedWordData(null);
     }
   };
 
@@ -67,14 +68,17 @@ export default function Home() {
   };
 
   return (
-    <div className="flex   flex-col justify-center items-center pt-10 pb-6 px-4   ">
+    <div className="flex   flex-col justify-center items-center  pt-10 pb-6 px-4   ">
       <div className="relative flex items-center  justify-center w-full">
         <input
           type="text"
-          className="border-2  px-8 py-4 bg-gray-100 rounded-2xl w-11/12"
+          className="border-2  px-8 py-4 bg-gray-100 dark:bg-gray-900 dark:text-white  rounded-2xl w-11/12"
           value={word}
           onChange={(e) => setWord((e.target as HTMLInputElement).value)}
           placeholder="search a word"
+          onKeyDown={(e) => {
+            fetchDefinition();
+          }}
         ></input>
 
         <img
@@ -84,7 +88,17 @@ export default function Home() {
         />
       </div>
 
-      {error && <p className="text-red-500 mt-3">{error}</p>}
+      {error && (
+        <div className="flex flex-col  justify-center items-center gap-y-8">
+          <img src="/sad.png" className="pt-10" />
+          <h3 className="text-white">{error}</h3>
+          <p className="  px-4 text-gray-500">
+            Sorry pal, we couldn't find definitions for the word you were
+            looking for. You can try the search again at later time or head to
+            the web instead.
+          </p>
+        </div>
+      )}
 
       <div className="ml-4">
         <div>
@@ -102,10 +116,7 @@ export default function Home() {
             </div>
 
             {fetchedWordData && fetchedWordData.phonetics.length > 0 && (
-              <button
-                onClick={() => playAudio(fetchedWordData.phonetics[0].audio!)}
-                className="w-14 mr-6"
-              >
+              <button className="w-14 mr-6">
                 <img src="/icon-play.svg" alt="Play audio" />
               </button>
             )}
