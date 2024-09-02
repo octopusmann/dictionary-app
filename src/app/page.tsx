@@ -170,7 +170,7 @@ export default function Home() {
               <div className="flex gap-x-3">
                 <span className="text-gray-400 pr-2">Synonyms :</span>
                 <div className="flex gap-x-1 text-purple-500 font-bold">
-                  {meaning.definitions[0].synonyms.map((synonym, index) => (
+                  {meaning.definitions[0].synonyms.map((synonym) => (
                     <span>{synonym},</span>
                   ))}
                 </div>
