@@ -3,7 +3,7 @@
 A responsive dictionary app built with **Next.js 14** and **Tailwind CSS**, supporting light and dark themes. Users can search for word definitions, view parts of speech, hear pronunciations, and explore synonyms — all presented with a modern UI.
 
 #Preview
-![Dictionary App UI] - (./dict_app.png)
+![Dictionary App UI](./dict_app.png)
 
 
 # Features
