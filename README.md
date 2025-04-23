@@ -6,11 +6,11 @@ A responsive dictionary app built with **Next.js 14** and **Tailwind CSS**, supp
 
 
 # Features
-- 🔍 Instant word lookup with auto-formatted results
-- 🎧 Audio pronunciation with a play button
-- 🌓 Dark mode toggle for enhanced accessibility
-- 📖 Displays meanings, word types, synonyms, and example usage
-- ⚡ Fast page transitions with Next.js App Router and layout features
+- Instant word lookup with auto-formatted results
+-  Audio pronunciation with a play button
+-  Dark mode toggle for enhanced accessibility
+-  Displays meanings, word types, synonyms, and example usage
+-  Fast page transitions with Next.js App Router and layout features
 
 # Tech Stack
 - Next.js (App Router)
